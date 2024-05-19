@@ -7,16 +7,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.example.restaurantmenuapp.ui.Food
+import com.example.restaurantmenuapp.ui.Title
 import com.example.restaurantmenuapp.ui.theme.RestaurantMenuAppTheme
 
 const val FETTUCCINE = "Fettuccine"
 const val ORDERS_MENU = "Orders Menu"
+const val amountStock = 5
+const val amountOrdered = 0
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +41,7 @@ class MainActivity : ComponentActivity() {
 fun PlayOrderMenu() {
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
 
-        val (title, fettuccine) = createRefs()
+        val (title, order) = createRefs()
 
         Title(modifier = Modifier.constrainAs(title) {
             start.linkTo(parent.start)
@@ -47,24 +49,13 @@ fun PlayOrderMenu() {
             top.linkTo(parent.top)
         })
 
-        Dishes(name = FETTUCCINE, modifier = Modifier.constrainAs(fettuccine) {
+        Food(name = FETTUCCINE, modifier = Modifier.constrainAs(order) {
             start.linkTo(parent.start)
             top.linkTo(title.bottom)
         })
-
     }
-
 }
 
-@Composable
-fun Title(modifier: Modifier) {
-    Text(text = ORDERS_MENU, fontSize = 48.sp, modifier = modifier)
-}
-
-@Composable
-fun Dishes(name: String, modifier: Modifier) {
-    Text(text = name, fontSize = 24.sp, modifier = modifier)
-}
 
 
 @Preview(showSystemUi = true)
