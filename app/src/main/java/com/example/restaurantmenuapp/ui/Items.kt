@@ -2,7 +2,9 @@ package com.example.restaurantmenuapp.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -19,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.example.restaurantmenuapp.FETTUCCINE
 import com.example.restaurantmenuapp.ORDERS_MENU
 import com.example.restaurantmenuapp.amountOrdered
-import com.example.restaurantmenuapp.amountStock
+import com.example.restaurantmenuapp.recipesNameToStockAmount
 
 
 @Composable
@@ -28,7 +30,7 @@ fun Title(modifier: Modifier) {
 }
 
 @Composable
-fun Food(name: String, modifier: Modifier) {
+fun Food(name: String, stock: Int, modifier: Modifier) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Start
@@ -36,7 +38,7 @@ fun Food(name: String, modifier: Modifier) {
 
         var counter by rememberSaveable { mutableIntStateOf(amountOrdered) }
 
-        val color = if (counter >= amountStock) Color.Red else Color.Black
+        val color = if (counter >= stock) Color.Red else Color.Black
 
         Text(
             text = name,
@@ -50,7 +52,7 @@ fun Food(name: String, modifier: Modifier) {
             modifier = Modifier
                 .padding(8.dp)
                 .clickable {
-                    if (counter < amountStock)
+                    if (counter < stock)
                         counter += 1
                 }
         )
@@ -72,9 +74,24 @@ fun Food(name: String, modifier: Modifier) {
     }
 }
 
+@Composable
+fun MenuItem(modifier: Modifier) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Top
+    ) {
+
+        for ((name, stock) in recipesNameToStockAmount) {
+            Food(name = name, stock = stock, modifier = modifier)
+        }
+
+
+    }
+}
+
 @Preview(showSystemUi = true)
 @Composable
 fun MyItems() {
-    Food(FETTUCCINE, Modifier)
+    Food(FETTUCCINE, 5, Modifier)
 }
 

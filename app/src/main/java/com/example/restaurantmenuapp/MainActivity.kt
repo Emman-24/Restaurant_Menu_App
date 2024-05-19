@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.example.restaurantmenuapp.ui.Food
+import com.example.restaurantmenuapp.ui.MenuItem
 import com.example.restaurantmenuapp.ui.Title
 import com.example.restaurantmenuapp.ui.theme.RestaurantMenuAppTheme
 
@@ -37,6 +37,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+val recipesNameToStockAmount = mapOf(
+    "Fettuccine" to 5,
+    "Risotto" to 6,
+    "Gnocchi" to 4,
+    "Spaghetti" to 3,
+    "Lasagna" to 5,
+    "Steak Parmigiana" to 2
+)
+
 @Composable
 fun PlayOrderMenu() {
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -49,13 +58,13 @@ fun PlayOrderMenu() {
             top.linkTo(parent.top)
         })
 
-        Food(name = FETTUCCINE, modifier = Modifier.constrainAs(order) {
+        MenuItem(modifier = Modifier.constrainAs(order) {
             start.linkTo(parent.start)
             top.linkTo(title.bottom)
+            end.linkTo(parent.end)
         })
     }
 }
-
 
 
 @Preview(showSystemUi = true)
